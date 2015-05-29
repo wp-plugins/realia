@@ -4,6 +4,8 @@ Complete real estate solution in one plugin. Create your real estate website or 
 
 ## Description
 
+You can try it out by visiting a preview demo at [http://preview.wprealia.com/plugin/realia](http://preview.wprealia.com/plugin/realia "Demo").
+
 ### Front end submission system
 
 Realia allows to add properties by your users. Create the property directory by few clicks. If you want you can review
@@ -43,6 +45,7 @@ purposes or directory listings.
 * Image gallery
 * Location
 * Property type
+* Material
 * Amenities
 * Address
 * Property ID
@@ -51,10 +54,11 @@ purposes or directory listings.
 * Reduced
 * Video link
 * Price
+* Rooms
 * Beds
 * Baths
 * Garages
-* Area
+* Home area & Lot size (dimensions + area)
 * GPS position
 * Contract type
 * Description
@@ -101,16 +105,18 @@ purposes or directory listings.
 
 ### Shortcodes
 
-* [realia_breadcrumb] Displays breadcrumb.
-* [realia_login] Login page.
-* [realia_logout] Logout page.
-* [realia_register] Register page.
-* [realia_submission] Create and edit property form.
-* [realia_submission_payment] Payment page.
-* [realia_submission_remove] Remove property.
-* [realia_submission_list] List of properties added by current user.
-* [realia_submission_package_info] Displays package information, if available.
-* [realia_transactions] Transaction history for current user.
+| **Key**                             | **Description**                            |
+|:------------------------------------|:-------------------------------------------|
+| `[realia_breadcrumb]`               | Displays breadcrumb                        |
+| `[realia_login]`                    | Login page                                 |
+| `[realia_logout]`                   | Logout page                                |
+| `[realia_register]`                 | Register page                              |
+| `[realia_submission]`               | Create and edit property form              |
+| `[realia_submission_list]`          | List of properties added by current user   |
+| `[realia_submission_remove]`        | Remove property                            |
+| `[realia_submission_package_info]`  | Displays package information, if available |
+| `[realia_submission_payment]`       | Payment page                               |
+| `[realia_transactions]`             | Transaction history for current user       |
 
 ## Installation
 

@@ -176,6 +176,11 @@ class Realia_Post_Type_Property {
             'show_names'                => true,
             'fields'                    => array(
                 array(
+                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+                    'name'              => __( 'Rooms', 'realia' ),
+                    'type'              => 'text',
+                ),
+                array(
                     'id'                => REALIA_PROPERTY_PREFIX . 'attributes_beds',
                     'name'              => __( 'Beds', 'realia' ),
                     'type'              => 'text',
@@ -191,8 +196,20 @@ class Realia_Post_Type_Property {
                     'type'              => 'text',
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_area',
-                    'name'              => __( 'Area', 'realia' ),
+                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_home_area',
+                    'name'              => __( 'Home area', 'realia' ),
+                    'type'              => 'text',
+                    'description'       => __( 'In unit set in settings.', 'realia' ),
+                ),
+                array(
+                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_lot_dimensions',
+                    'name'              => __( 'Lot dimensions', 'realia' ),
+                    'type'              => 'text',
+                    'description'       => __( 'e.g. 20x30, 20x30x40, 20x30x40x50', 'realia' ),
+                ),
+                array(
+                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_lot_area',
+                    'name'              => __( 'Lot area', 'realia' ),
                     'type'              => 'text',
                     'description'       => __( 'In unit set in settings.', 'realia' ),
                 ),
@@ -386,6 +403,11 @@ class Realia_Post_Type_Property {
                         'description'       => __( 'Enter amount without currency.', 'realia' ),
                     ),
                     array(
+                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+                        'name'              => __( 'Rooms', 'realia' ),
+                        'type'              => 'text',
+                    ),
+                    array(
                         'id'                => REALIA_PROPERTY_PREFIX . 'attributes_beds',
                         'name'              => __( 'Beds', 'realia' ),
                         'type'              => 'text',
@@ -428,6 +450,12 @@ class Realia_Post_Type_Property {
                         'id'        => REALIA_PROPERTY_PREFIX . 'type',
                         'type'      => 'taxonomy_multicheck',
                         'taxonomy'  => 'property_types'
+                    ),
+                    array(
+                        'name'      => __( 'Materials', 'realia' ),
+                        'id'        => REALIA_PROPERTY_PREFIX . 'material',
+                        'type'      => 'taxonomy_multicheck',
+                        'taxonomy'  => 'materials'
                     ),
                     array(
                         'name'      => __( 'Amenities', 'realia' ),
@@ -518,6 +546,15 @@ class Realia_Post_Type_Property {
                 if ( ! empty( $terms ) ) {
                     $contract_type = array_shift( $terms );
                     echo sprintf('<a href="?post_type=property&contract=%s">%s</a>', $contract_type->slug, $contract_type->name );
+                } else {
+                    echo '-';
+                }
+                break;
+            case 'material':
+                $terms = get_the_terms( get_the_ID(), 'materials' );
+                if ( ! empty( $terms ) ) {
+                    $material = array_shift( $terms );
+                    echo sprintf('<a href="?post_type=property&material=%s">%s</a>', $material->slug, $material->name );
                 } else {
                     echo '-';
                 }
