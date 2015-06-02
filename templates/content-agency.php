@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="entry-header">
         <?php
@@ -77,7 +83,7 @@
                             <?php include 'agents/box.php'; ?>
                         </div>
                     <?php endwhile; ?>
-                </div><!-- /.row -->
+                </div><!-- /.agency-agents -->
             <?php endif;?>
 
             <?php wp_reset_query(); ?>

@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+
 <?php if ( have_posts() ) : ?>
 	<div class="infobox multiple">
 		<div class="infobox-content">
@@ -20,12 +26,10 @@
 				<?php endwhile; ?>
 			</div>
 
-			<a href="#" class="close"><i class="fa fa-close"></i></a>
+			<a href="#" class="close"></a>
 
 			<?php if ( count( $group ) > 2 ) : ?>
-				<div class="infobox-scroll">
-					<i class="fa fa-arrow-circle-o-down"></i>
-				</div>
+				<div class="infobox-scroll"></div>
 			<?php endif; ?>
 		</div>
 	</div>

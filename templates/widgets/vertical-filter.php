@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+
 <?php $input_titles = ! empty( $instance['input_titles'] ) ? $instance['input_titles'] : 'labels'; ?>
 
 <?php echo wp_kses( $args['before_widget'], wp_kses_allowed_html( 'post' ) ); ?>
@@ -10,7 +16,7 @@
 
 <form method="get" action="<?php echo get_post_type_archive_link( 'property' ); ?>">
 	<?php $skip = array(
-		'filter-id', 'filter-location', 'filter-contract-type', 'price-from', 'price-to', 'beds', 'baths', 'garages', 'area'
+		'filter-id', 'filter-location', 'filter-status', 'price-from', 'price-to', 'beds', 'baths', 'garages', 'area'
 	); ?>
 
     <?php foreach ( $_GET as $key => $value ) : ?>
@@ -18,6 +24,7 @@
         	<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $value ); ?>">
         <?php endif; ?>
     <?php endforeach; ?>
+
     <?php if ( empty( $instance['hide_property_id'] ) ) : ?>
 		<!-- PROPERTY ID -->
 		<div class="form-group">
@@ -25,7 +32,7 @@
 					<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_property_id"><?php echo __( 'Property ID', 'realia' ); ?></label>
 				<?php endif; ?>
 
-			<input type="text" name="filter-id" class="form-control" 
+			<input type="text" name="filter-id" class="form-control"
 				   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Property ID', 'realia' ); ?>"<?php endif; ?>
 				   value="<?php echo ! empty( $_GET['filter-id']) ? $_GET['filter-id'] : ''; ?>"
                    id="<?php echo esc_attr( $args['widget_id'] ); ?>_property_id">
@@ -51,9 +58,9 @@
 				<?php $locations = get_terms( 'locations', array(
 					'hide_empty' 	=> false,
 					'parent'		=> 0
-				) ); ?>			
+				) ); ?>
 
-				<?php if ( is_array( $locations ) ) : ?>				
+				<?php if ( is_array( $locations ) ) : ?>
 					<?php foreach ( $locations as $location ) : ?>
 						<option value="<?php echo esc_attr( $location->term_id ); ?>" <?php if ( ! empty($_GET['filter-location'] ) && $_GET['filter-location'] == $location->term_id ) : ?>selected="selected"<?php endif; ?>><?php echo esc_html( $location->name ); ?></option>
 
@@ -66,7 +73,7 @@
 							<?php foreach ( $sublocations as $sublocation ) : ?>
 								<option value="<?php echo esc_attr( $sublocation->term_id ); ?>" <?php if ( ! empty($_GET['filter-location'] ) && $_GET['filter-location'] == $sublocation->term_id ) : ?>selected="selected"<?php endif; ?>>
 									&raquo;&nbsp; <?php echo esc_html( $sublocation->name ); ?>
-								</option>							
+								</option>
 
 								<?php $subsublocations = get_terms( 'locations', array(
 									'hide_empty' 	=> false,
@@ -77,7 +84,7 @@
 									<?php foreach ( $subsublocations as $subsublocation ) : ?>
 										<option value="<?php echo esc_attr( $subsublocation->term_id ); ?>" <?php if ( ! empty($_GET['filter-location'] ) && $_GET['filter-location'] == $subsublocation->term_id ) : ?>selected="selected"<?php endif; ?>>
 											&nbsp;&nbsp;&nbsp;&raquo;&nbsp; <?php echo esc_html( $subsublocation->name ); ?>
-										</option>							
+										</option>
 									<?php endforeach; ?>
 								<?php endif; ?>
 							<?php endforeach; ?>
@@ -88,8 +95,8 @@
 		</div><!-- /.form-group -->
 	<?php endif; ?>
 
-	<!-- PROPERTY TYPE -->
-	<?php if ( empty( $instance['hide_property_type'] ) ) : ?>	
+	<?php if ( empty( $instance['hide_property_type'] ) ) : ?>
+		<!-- PROPERTY TYPE -->
 		<div class="form-group">
 			<?php if ( $input_titles == 'labels' ) : ?>
 				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_property_type"><?php echo __( 'Property type', 'realia' ); ?></label>
@@ -114,120 +121,169 @@
 		</div><!-- /.form-group -->
 	<?php endif; ?>
 
-	<?php if ( empty( $instance['hide_contract'] ) ) : ?>
-		<!-- CONTRACT TYPE-->
+	<?php if ( empty( $instance['hide_amenity'] ) ) : ?>
+		<!-- AMENITY -->
 		<div class="form-group">
 			<?php if ( $input_titles == 'labels' ) : ?>
-				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_contract"><?php echo __( 'Contract', 'realia' ); ?></label>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_property_type"><?php echo __( 'Amenity', 'realia' ); ?></label>
 			<?php endif; ?>
 
-			<select name="filter-contract-type" id="<?php echo esc_attr( $args['widget_id'] ); ?>_contract">
-				<?php $contracts = get_terms( 'contracts', array( 'hide_empty' => false ) ); ?>
-				
+			<select name="filter-property-type" id="<?php echo esc_attr( $args['widget_id'] ); ?>_property_type">
+				<?php $amenities = get_terms( 'amenities', array( 'hide_empty' => false ) ); ?>
 				<option value="">
 					<?php if ( $input_titles == 'placeholders' ) : ?>
-						<?php echo __( 'Contract', 'realia' ); ?>
+						<?php echo __( 'Amenity', 'realia' ); ?>
 					<?php else: ?>
-						<?php echo __( 'All contracts', 'realia' ); ?>
+						<?php echo __( 'All amenities', 'realia' ); ?>
 					<?php endif; ?>
 				</option>
 
-				<?php if ( is_array( $contracts ) ) : ?>
-					<?php foreach ( $contracts as $contract ) : ?>
-						<option value="<?php echo esc_attr( $contract->term_id ); ?>" <?php if ( ! empty( $_GET['filter-contract-type'] ) &&  $_GET['filter-contract-type'] == $contract->term_id ) : ?>selected="selected"<?php endif; ?>><?php echo esc_html( $contract->name ); ?></option>
+				<?php if ( is_array( $amenities ) ) : ?>
+					<?php foreach ( $amenities as $amenity ) : ?>
+						<option value="<?php echo esc_attr( $amenity->term_id ); ?>" <?php if ( ! empty( $_GET['filter-amenity'] ) && $_GET['filter-amenity'] == $amenity->term_id ) : ?>selected="selected"<?php endif; ?>><?php echo esc_html( $amenity->name ); ?></option>
 					<?php endforeach ?>
 				<?php endif; ?>
 			</select>
 		</div><!-- /.form-group -->
 	<?php endif; ?>
 
+	<?php if ( empty( $instance['hide_status'] ) ) : ?>
+		<!-- STATUS TYPE-->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_status"><?php echo __( 'Status', 'realia' ); ?></label>
+			<?php endif; ?>
+
+			<select name="filter-status" id="<?php echo esc_attr( $args['widget_id'] ); ?>_status">
+				<?php $statuses = get_terms( 'statuses', array( 'hide_empty' => false ) ); ?>
+
+				<option value="">
+					<?php if ( $input_titles == 'placeholders' ) : ?>
+						<?php echo __( 'Status', 'realia' ); ?>
+					<?php else: ?>
+						<?php echo __( 'All statuses', 'realia' ); ?>
+					<?php endif; ?>
+				</option>
+
+				<?php if ( is_array( $statuses ) ) : ?>
+					<?php foreach ( $statuses as $status ) : ?>
+						<option value="<?php echo esc_attr( $status->term_id ); ?>" <?php if ( ! empty( $_GET['filter-status-type'] ) &&  $_GET['filter-status-type'] == $status->term_id ) : ?>selected="selected"<?php endif; ?>><?php echo esc_html( $status->name ); ?></option>
+					<?php endforeach ?>
+				<?php endif; ?>
+			</select>
+		</div><!-- /.form-group -->
+	<?php endif; ?>
+
+	<?php if ( empty( $instance['hide_contract'] ) ) : ?>
+		<!-- CONTRACT -->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_status"><?php echo __( 'Contract', 'realia' ); ?></label>
+			<?php endif; ?>
+
+			<select name="filter-contract" id="<?php echo esc_attr( $args['widget_id'] ); ?>_status">
+				<option value=""><?php echo __( 'All contracts', 'realua' ); ?></option>
+				<option value="<?php echo REALIA_CONTRACT_SALE; ?>" <?php if ( ! empty( $_GET['filter-contract'] ) &&  $_GET['filter-contract'] == REALIA_CONTRACT_SALE ) : ?>selected="selected"<?php endif; ?>><?php echo __( 'Sale', 'realia' ); ?></option>
+				<option value="<?php echo REALIA_CONTRACT_RENT; ?>" <?php if ( ! empty( $_GET['filter-contract'] ) &&  $_GET['filter-contract'] == REALIA_CONTRACT_RENT ) : ?>selected="selected"<?php endif; ?>><?php echo __( 'Rent', 'realia' ); ?></option>
+			</select>
+		</div><!-- /.form-group -->
+	<?php endif; ?>
+
 	<?php if ( empty( $instance['hide_price'] ) ) : ?>
 		<!-- PRICE -->
-		<div class="row">
-			<div class="form-group col-sm-6">	
-				<?php if ( $input_titles == 'labels' ) : ?>
-					<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_price_from"><?php echo __( 'Price from', 'realia' ); ?></label>
-				<?php endif; ?>
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_price_from"><?php echo __( 'Price from', 'realia' ); ?></label>
+			<?php endif; ?>
 
-				<input type="text" name="filter-price-from" 
-				       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Price from', 'realia' ); ?>"<?php endif; ?>
-				       class="form-control" value="<?php echo ! empty( $_GET['filter-price-from'] ) ? $_GET['filter-price-from'] : ''; ?>"
-                       id="<?php echo esc_attr( $args['widget_id'] ); ?>_price_from">
-			</div><!-- /.form-group -->
+			<input type="text" name="filter-price-from"
+			       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Price from', 'realia' ); ?>"<?php endif; ?>
+			       class="form-control" value="<?php echo ! empty( $_GET['filter-price-from'] ) ? $_GET['filter-price-from'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_price_from">
+		</div><!-- /.form-group -->
 
-			<div class="form-group col-sm-6">
-				<?php if ( $input_titles == 'labels' ) : ?>
-					<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_price_to"><?php echo __( 'Price to', 'realia' ); ?></label>
-				<?php endif; ?>
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_price_to"><?php echo __( 'Price to', 'realia' ); ?></label>
+			<?php endif; ?>
 
-				<input type="text" name="filter-price-to" 
-				       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Price to', 'realia' ); ?>"<?php endif; ?>
-				       class="form-control" value="<?php echo ! empty( $_GET['filter-price-to'] ) ? $_GET['filter-price-to'] : ''; ?>"
-                       id="<?php echo esc_attr( $args['widget_id'] ); ?>_price_to">
-			</div><!-- /.form-group -->
-		</div><!-- /.row -->
+			<input type="text" name="filter-price-to"
+			       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Price to', 'realia' ); ?>"<?php endif; ?>
+			       class="form-control" value="<?php echo ! empty( $_GET['filter-price-to'] ) ? $_GET['filter-price-to'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_price_to">
+		</div><!-- /.form-group -->
 	<?php endif; ?>
 
-	<?php if ( empty( $instance['hide_baths'] ) || empty( $instance['hide_beds'] ) ) : ?>
-		<!-- BATHS & BEDS -->
-		<div class="row">
-			<?php if ( empty( $instance['hide_baths'] ) ) : ?>
-				<div class="form-group <?php echo empty( $instance['hide_beds'] ) ? 'col-sm-6' : 'col-sm-12'; ?>">		
-					<?php if ( $input_titles == 'labels' ) : ?>
-						<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_baths"><?php echo __( 'Baths', 'realia' ); ?></label>
-					<?php endif; ?>
+	<?php if ( empty( $instance['hide_rooms'] ) ) : ?>
+		<!-- ROOMS -->
+		<?php if ( empty( $instance['hide_rooms'] ) ) : ?>
+			<div class="form-group">
+				<?php if ( $input_titles == 'labels' ) : ?>
+					<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_baths"><?php echo __( 'Rooms', 'realia' ); ?></label>
+				<?php endif; ?>
 
-					<input type="text" name="filter-baths" 
-						   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Baths', 'realia' ); ?>"<?php endif; ?>
-					       class="form-control" value="<?php echo ! empty( $_GET['filter-baths'] ) ? $_GET['filter-baths'] : ''; ?>"
-                           id="<?php echo esc_attr( $args['widget_id'] ); ?>_baths">
-				</div><!-- /.form-group -->
-			<?php endif; ?>
-
-			<?php if ( empty( $instance['hide_beds'] ) ) : ?>
-				<div class="form-group  <?php echo empty( $instance['hide_baths'] ) ? 'col-sm-6' : 'col-sm-12'; ?>">
-					<?php if ( $input_titles == 'labels' ) : ?>
-						<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_beds"><?php echo __( 'Beds', 'realia' ); ?></label>
-					<?php endif; ?>
-
-					<input type="text" name="filter-beds" 
-						   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Beds', 'realia' ); ?>"<?php endif; ?> 
-						   class="form-control" value="<?php echo ! empty( $_GET['filter-beds'] ) ? $_GET['filter-beds'] : ''; ?>"
-                           id="<?php echo esc_attr( $args['widget_id'] ); ?>_beds">
-				</div><!-- /.form-group -->
-			<?php endif;?>
-		</div><!-- /.row -->
+				<input type="text" name="filter-baths"
+				       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Rooms', 'realia' ); ?>"<?php endif; ?>
+				       class="form-control" value="<?php echo ! empty( $_GET['filter-rooms'] ) ? $_GET['filter-rooms'] : ''; ?>"
+				       id="<?php echo esc_attr( $args['widget_id'] ); ?>_baths">
+			</div><!-- /.form-group -->
+		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if ( empty( $instance['hide_area'] ) || empty( $instance['hide_garages'] ) ) : ?>
-		<!-- AREA & GARAGES -->
-		<div class="row">
-			<?php if ( empty ( $instance['hide_area'] ) ) : ?>
-				<div class="form-group  <?php echo empty( $instance['hide_garages'] ) ? 'col-sm-6' : 'col-sm-12'; ?>">		
-					<?php if ( $input_titles == 'labels' ) : ?>
-						<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_area"><?php echo __( 'Area', 'realia' ); ?></label>
-					<?php endif; ?>
-
-					<input type="text" name="filter-area" 
-						   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Area', 'realia' ); ?>"<?php endif; ?> 
-						   class="form-control" value="<?php echo ! empty( $_GET['filter-area'] ) ? $_GET['filter-area'] : ''; ?>"
-                           id="<?php echo esc_attr( $args['widget_id'] ); ?>_area">
-				</div><!-- /.form-group -->
+	<?php if ( empty( $instance['hide_baths'] ) ) : ?>
+		<!-- BATHS -->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_baths"><?php echo __( 'Baths', 'realia' ); ?></label>
 			<?php endif; ?>
 
-			<?php if ( empty ( $instance['hide_garages'] ) ) : ?>
-				<div class="form-group  <?php echo empty( $instance['hide_area'] ) ? 'col-sm-6' : 'col-sm-12'; ?>">
-					<?php if ( $input_titles == 'labels' ) : ?>
-						<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_garages"><?php echo __( 'Garages', 'realia' ); ?></label>
-					<?php endif; ?>
+			<input type="text" name="filter-baths"
+				   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Baths', 'realia' ); ?>"<?php endif; ?>
+			       class="form-control" value="<?php echo ! empty( $_GET['filter-baths'] ) ? $_GET['filter-baths'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_baths">
+		</div><!-- /.form-group -->
+	<?php endif; ?>
 
-					<input type="text" name="filter-garages" 
-					       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Garages', 'realia' ); ?>"<?php endif; ?> 
-					       class="form-control" value="<?php echo ! empty( $_GET['filter-garages'] ) ? $_GET['filter-garages'] : ''; ?>"
-                           id="<?php echo esc_attr( $args['widget_id'] ); ?>_garages">
-				</div><!-- /.form-group -->
+	<?php if ( empty( $instance['hide_beds'] ) ) : ?>
+		<!-- BEDS -->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_beds"><?php echo __( 'Beds', 'realia' ); ?></label>
 			<?php endif; ?>
-		</div><!-- /.row -->
+
+			<input type="text" name="filter-beds"
+				   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Beds', 'realia' ); ?>"<?php endif; ?>
+				   class="form-control" value="<?php echo ! empty( $_GET['filter-beds'] ) ? $_GET['filter-beds'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_beds">
+		</div><!-- /.form-group -->
+	<?php endif;?>
+
+	<?php if ( empty ( $instance['hide_area'] ) ) : ?>
+		<!-- AREA -->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_area"><?php echo __( 'Area', 'realia' ); ?></label>
+			<?php endif; ?>
+
+			<input type="text" name="filter-area"
+				   <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Area', 'realia' ); ?>"<?php endif; ?>
+				   class="form-control" value="<?php echo ! empty( $_GET['filter-area'] ) ? $_GET['filter-area'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_area">
+		</div><!-- /.form-group -->
+	<?php endif; ?>
+
+	<?php if ( empty ( $instance['hide_garages'] ) ) : ?>
+		<!-- GARAGES -->
+		<div class="form-group">
+			<?php if ( $input_titles == 'labels' ) : ?>
+				<label for="<?php echo esc_attr( $args['widget_id'] ); ?>_garages"><?php echo __( 'Garages', 'realia' ); ?></label>
+			<?php endif; ?>
+
+			<input type="text" name="filter-garages"
+			       <?php if( $input_titles == 'placeholders' ) : ?>placeholder="<?php echo __( 'Garages', 'realia' ); ?>"<?php endif; ?>
+			       class="form-control" value="<?php echo ! empty( $_GET['filter-garages'] ) ? $_GET['filter-garages'] : ''; ?>"
+                   id="<?php echo esc_attr( $args['widget_id'] ); ?>_garages">
+		</div><!-- /.form-group -->
 	<?php endif; ?>
 
 	<?php if ( ! empty( $instance['button_text'] ) ) : ?>

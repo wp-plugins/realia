@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+
 <?php $create_page_id = get_theme_mod( 'realia_submission_create_page', null ); ?>
 
 <?php if ( ! empty( $create_page_id ) ) : ?>
@@ -23,16 +29,11 @@
 				<td class="property-table-info">
 					<?php if ( get_post_status() == 'pending' ) : ?>
 						<div class="ribbon warning">
-							<i class="fa fa-question"></i>
 						</div><!-- /.ribbon -->
 					<?php elseif ( get_post_status() == 'publish' ) : ?>
-						<div class="ribbon">
-							<i class="fa fa-check"></i>
-						</div><!-- /.ribbon -->
+						<div class="ribbon publish"></div><!-- /.ribbon -->
 					<?php elseif ( get_post_status() == 'draft' ) : ?>
-						<div class="ribbon danger">
-							<i class="fa fa-lock"></i>
-						</div><!-- /.ribbon -->
+						<div class="ribbon draft"></div><!-- /.ribbon -->
 					<?php endif; ?>
 
 					<?php if ( has_post_thumbnail() ) : ?>
@@ -85,14 +86,13 @@
 
 											<button type="submit">
 												<?php echo __( 'Make TOP', 'realia' ); ?> <span class="label label-primary"><?php echo Realia_Price::format_price( $price ); ?></span>
-												<i class="fa fa-arrow-circle-o-right buy"></i>
 											</button>
 										</form>
 									<?php endif; ?>
 								<?php endif; ?>
 							<?php else: ?>
 								<button class="disabled">
-									<?php echo __( 'Sticky', 'realia' ); ?> <i class="fa fa-check success"></i>
+									<?php echo __( 'Sticky', 'realia' ); ?>
 								</button>
 							<?php endif; ?>
 
@@ -110,14 +110,13 @@
 
 											<button type="submit">
 												<?php echo __( 'Make featured', 'realia' ); ?> <span class="label label-primary"><?php echo Realia_Price::format_price( $price ); ?></span>
-												<i class="fa fa-arrow-circle-o-right buy"></i>
 											</button>
 										</form>
 									<?php endif; ?>
 								<?php endif; ?>
 							<?php else : ?>
 								<button class="disabled">
-									<?php echo __( 'Featured', 'realia' ); ?> <i class="fa fa-check success"></i>
+									<?php echo __( 'Featured', 'realia' ); ?>
 								</button>
 							<?php endif; ?>
 
@@ -126,7 +125,7 @@
 							<?php $property_status = get_post_status(); ?>
 							<?php if ( $property_status == 'publish' ) : ?>
 								<button class="disabled">
-									<?php echo __( 'Published', 'realia' ); ?> <i class="fa fa-check success"></i>
+									<?php echo __( 'Published', 'realia' ); ?>
 								</button>
 							<?php else: ?>
 								<!-- PAY PER POST -->
@@ -139,7 +138,6 @@
 
 											<button type="submit">
 												<?php echo __( 'Publish', 'realia' ); ?> <span class="label label-primary"><?php echo Realia_Price::format_price( $price ); ?></span>
-												<i class="fa fa-arrow-circle-o-right buy"></i>
 											</button>
 										</form>
 									<?php endif; ?>

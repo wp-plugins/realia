@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php $gallery = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'gallery', true ); ?>
 
@@ -27,7 +33,7 @@
 				<?php $index = 0; ?>
 				<?php foreach ( $gallery as $id => $src ) : ?>
 					<li <?php echo ( $index == 0 ) ? 'class="active"' : ''; ?>>
-						<a rel="<?php echo esc_url( $src ); ?>"></a>
+						<a rel="<?php echo esc_url( $src ); ?>"><?php echo __( 'Show', 'realia' ); ?></a>
 						<?php $index++; ?>
 					</li>
 				<?php endforeach; ?>
@@ -58,35 +64,86 @@
 					<dt><?php echo __( 'ID', 'realia' ); ?></dt><dd><?php echo esc_attr( $id ); ?></dd>
 				<?php endif; ?>
 
+				<?php $year_built = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'year_built', true ); ?>
+				<?php if ( ! empty( $year_built ) ) : ?>
+					<dt><?php echo __( 'Year built', 'realia' ); ?></dt><dd><?php echo esc_attr( $year_built ); ?></dd>
+				<?php endif; ?>
+
 				<?php $type = Realia_Query::get_property_type_name(); ?>
 				<?php if ( ! empty ( $type ) ) : ?>
 					<dt><?php echo __( 'Type', 'realia' ); ?></dt><dd><?php echo esc_attr( $type ); ?></dd>
 				<?php endif; ?>
 
-				<?php $contract = Realia_Query::get_property_contract_name(); ?>
+				<?php $sold = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'sold', true ); ?>
+				<dt><?php echo __( 'Sold', 'realia' ); ?></dt>
+				<dd>
+					<?php if ( ! empty( $sold ) ) : ?>
+						<?php echo __( 'Yes', 'realia' ); ?>
+					<?php else : ?>
+						<?php echo __( 'No', 'realia' ); ?>
+					<?php endif; ?>
+				</dd>
+
+				<?php $contract = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'contract', true ); ?>
+
 				<?php if ( ! empty ( $contract ) ) : ?>
-					<dt><?php echo __( 'Contract', 'realia' ); ?></dt><dd><?php echo esc_attr( $contract ); ?></dd>
+					<dt><?php echo __( 'Contract', 'realia' ); ?></dt>
+					<dd>
+						<?php if ( $contract == REALIA_CONTRACT_RENT ) : ?>
+							<?php echo __( 'Rent', 'realia' ); ?>
+						<?php elseif ( $contract == REALIA_CONTRACT_SALE ) : ?>
+							<?php echo __( 'Sale', 'realia' ); ?>
+						<?php endif; ?>
+					</dd>
 				<?php endif; ?>
 
-				<?php $location = Realia_Query::get_property_location_name(); ?>
+				<?php $status = Realia_Query::get_property_status_name(); ?>
+				<?php if ( ! empty ( $status ) ) : ?>
+					<dt><?php echo __( 'Status', 'realia' ); ?></dt><dd><?php echo esc_attr( $status ); ?></dd>
+				<?php endif; ?>
+
+                <?php $location = Realia_Query::get_property_location_name(); ?>
 				<?php if ( ! empty ( $location ) ) : ?>
 					<dt><?php echo __( 'Location', 'realia' ); ?></dt><dd><?php echo wp_kses( $location, wp_kses_allowed_html( 'post' ) ); ?></dd>
 				<?php endif; ?>
 
-				<?php $area = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_area', true ); ?>
-				<?php if ( ! empty( $area ) ) : ?>
-					<dt><?php echo __( 'Area', 'realia' ); ?></dt><dd><?php echo esc_attr( $area ); ?> <?php echo get_theme_mod( 'realia_measurement_area_unit', 'sqft' ); ?></dd>
+				<?php $home_area = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_area', true ); ?>
+				<?php if ( ! empty( $home_area ) ) : ?>
+					<dt><?php echo __( 'Home area', 'realia' ); ?></dt><dd><?php echo esc_attr( $home_area ); ?>
+						<?php echo get_theme_mod( 'realia_measurement_area_unit', 'sqft' ); ?></dd>
 				<?php endif; ?>
 
-				<?php $baths = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_baths', true ); ?>
-				<?php if ( ! empty( $baths ) ) : ?>
-					<dt><?php echo __( 'Baths', 'realia' ); ?></dt><dd><?php echo esc_attr( $baths ); ?></dd>
+				<?php $lot_dimensions = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_lot_dimensions', true ); ?>
+				<?php if ( ! empty( $lot_dimensions ) ) : ?>
+					<dt><?php echo __( 'Lot dimensions', 'realia' ); ?></dt><dd><?php echo esc_attr( $lot_dimensions ); ?>
+						<?php echo get_theme_mod( 'realia_measurement_distance_unit', 'ft' ); ?></dd>
 				<?php endif; ?>
+
+				<?php $lot_area = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_lot_area', true ); ?>
+				<?php if ( ! empty( $lot_area ) ) : ?>
+					<dt><?php echo __( 'Lot area', 'realia' ); ?></dt><dd><?php echo esc_attr( $lot_area ); ?>
+						<?php echo get_theme_mod( 'realia_measurement_area_unit', 'sqft' ); ?></dd>
+				<?php endif; ?>
+
+                <?php $material = Realia_Query::get_property_material_name(); ?>
+                <?php if ( ! empty ( $material ) ) : ?>
+                    <dt><?php echo __( 'Material', 'realia' ); ?></dt><dd><?php echo wp_kses( $material, wp_kses_allowed_html( 'post' ) ); ?></dd>
+                <?php endif; ?>
+
+                <?php $rooms = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_rooms', true ); ?>
+                <?php if ( ! empty( $rooms ) ) : ?>
+                    <dt><?php echo __( 'Rooms', 'realia' ); ?></dt><dd><?php echo esc_attr( $rooms ); ?></dd>
+                <?php endif; ?>
 
 				<?php $beds = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_beds', true ); ?>
 				<?php if ( ! empty( $beds ) ) : ?>
 					<dt><?php echo __( 'Beds', 'realia' ); ?></dt><dd><?php echo esc_attr( $beds ); ?></dd>
 				<?php endif; ?>
+
+                <?php $baths = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_baths', true ); ?>
+                <?php if ( ! empty( $baths ) ) : ?>
+                    <dt><?php echo __( 'Baths', 'realia' ); ?></dt><dd><?php echo esc_attr( $baths ); ?></dd>
+                <?php endif; ?>
 
 				<?php $garages = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'attributes_garages', true ); ?>
 				<?php if ( ! empty( $garages ) ) : ?>
@@ -276,10 +333,10 @@
 
                 <?php while( have_posts() ) : the_post(); ?>
                     <div class="property-box-wrapper">
-                        <?php echo Realia_Template_Loader::load('properties/box'); ?>
+                        <?php echo Realia_Template_Loader::load( 'properties/box' ); ?>
                     </div>
                 <?php endwhile; ?>
-            </div><!-- /.row -->
+            </div><!-- /.similar-properties -->
 
         <?php endif?>
 
@@ -298,7 +355,7 @@
         <?php if ( comments_open() || get_comments_number() ): ?>
             <div class="box">
                 <?php comments_template( '', true ); ?>
-            </div>
+            </div><!-- /.box -->
         <?php endif; ?>
 	</div><!-- .entry-content -->
 
@@ -310,7 +367,6 @@
 	?>
 
 	<footer class="entry-footer">
-		<?php twentyfifteen_entry_meta(); ?>
 		<?php edit_post_link( __( 'Edit', 'realia' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-footer -->
 

@@ -4,6 +4,8 @@ Complete real estate solution in one plugin. Create your real estate website or 
 
 ## Description
 
+You can try it out by visiting a preview demo at [http://preview.wprealia.com/plugin/realia](http://preview.wprealia.com/plugin/realia "Demo").
+
 ### Front end submission system
 
 Realia allows to add properties by your users. Create the property directory by few clicks. If you want you can review
@@ -43,20 +45,24 @@ purposes or directory listings.
 * Image gallery
 * Location
 * Property type
+* Status
+* Contract
+* Material
 * Amenities
 * Address
 * Property ID
+* Year built
 * Featured
 * Sticky
 * Reduced
 * Video link
 * Price
+* Rooms
 * Beds
 * Baths
 * Garages
-* Area
+* Home area & Lot size (dimensions + area)
 * GPS position
-* Contract type
 * Description
 * Floor plans
 * Land valuation
@@ -101,16 +107,18 @@ purposes or directory listings.
 
 ### Shortcodes
 
-* [realia_breadcrumb] Displays breadcrumb.
-* [realia_login] Login page.
-* [realia_logout] Logout page.
-* [realia_register] Register page.
-* [realia_submission] Create and edit property form.
-* [realia_submission_payment] Payment page.
-* [realia_submission_remove] Remove property.
-* [realia_submission_list] List of properties added by current user.
-* [realia_submission_package_info] Displays package information, if available.
-* [realia_transactions] Transaction history for current user.
+| **Key**                             | **Description**                            |
+|:------------------------------------|:-------------------------------------------|
+| `[realia_breadcrumb]`               | Displays breadcrumb                        |
+| `[realia_login]`                    | Login page                                 |
+| `[realia_logout]`                   | Logout page                                |
+| `[realia_register]`                 | Register page                              |
+| `[realia_submission]`               | Create and edit property form              |
+| `[realia_submission_list]`          | List of properties added by current user   |
+| `[realia_submission_remove]`        | Remove property                            |
+| `[realia_submission_package_info]`  | Displays package information, if available |
+| `[realia_submission_payment]`       | Payment page                               |
+| `[realia_transactions]`             | Transaction history for current user       |
 
 ## Installation
 
@@ -149,6 +157,28 @@ Create at least one agent at first and then choose the one you wish to assign in
 
 ## Changelog
 
+**0.3.0**
+
+*Release Date - 2nd June, 2015*
+
+* Added amenities, status, contract, rooms filters
+* Options to select property layout in "Properties" widget
+* Read more text for property boxes
+* Call Realia_Template_Loader:locate() with plugin param
+* New CMB2 version
+* Templates cleanup
+* Updated translation catalogue
+
+**0.2.0**
+
+*Release Date - 29th May, 2015*
+
+* Material
+* Rooms
+* Home area & Lot size (dimensions + area)
+
 **0.1.0**
 
-Initial release
+*Release Date - 22th May, 2015*
+
+* initial release
