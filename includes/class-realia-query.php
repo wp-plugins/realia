@@ -159,18 +159,18 @@ class Realia_Query {
     }
 
     /**
-     * Gets property contract name
+     * Gets property status name
      *
      * @access public
      * @param null $post_id
      * @return bool
      */
-    public static function get_property_contract_name( $post_id = null ) {
+    public static function get_property_status_name( $post_id = null ) {
         if ( $post_id == null ) {
             $post_id = get_the_ID();
         }
 
-        $types = wp_get_post_terms( $post_id, 'contracts' );
+        $types = wp_get_post_terms( $post_id, 'statuses' );
 
         if ( is_array( $types ) && count( $types ) > 0 ) {
             $type = array_shift( $types );
@@ -430,4 +430,20 @@ class Realia_Query {
     public static function loop_reset() {
         wp_reset_query();
     }
+
+	/**
+	 * Checks if there is another post in query
+	 *
+	 * @access public
+	 * @return bool
+	 */
+	public static function loop_has_next() {
+		global $wp_query;
+
+		if ( $wp_query->current_post + 1 < $wp_query->post_count ) {
+			return true;
+		}
+
+		return false;
+	}
 }

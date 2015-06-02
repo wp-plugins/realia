@@ -180,7 +180,7 @@
     padding: 10px;
 }
 
-.property-small:last-child {
+.properties-row .property-container:last-child .property-small {
     margin-bottom: 0px;
 }
 
@@ -274,6 +274,11 @@
     float: right;
 }
 
+.property-box-read-more {
+    text-align: right;
+    text-decoration: underline;
+}
+
 /*******************************************************************
  * Property Gallery
  *******************************************************************/
@@ -301,6 +306,7 @@
 .property-gallery-index li {
     display: inline-block;
     margin: 0px 5px;
+    text-indent: -9999px;
 }
 
 .property-gallery-index li.active a {

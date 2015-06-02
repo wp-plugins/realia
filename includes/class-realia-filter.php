@@ -24,7 +24,7 @@ class Realia_Filter {
     }
 
     /**
-     * Checks if in URI are filter conditiokns
+     * Checks if in URI are filter conditions
      *
      * @access public
      * @return bool
@@ -49,7 +49,7 @@ class Realia_Filter {
      */
     public static function taxonomy( $query ) {
         $is_correct_taxonomy = false;
-        if ( is_tax( 'contracts' ) || is_tax( 'property_types' ) || is_tax( 'amenities') || is_tax( 'locations' ) ) {
+        if ( is_tax( 'statuses' ) || is_tax( 'property_types' ) || is_tax( 'amenities') || is_tax( 'locations' ) ) {
             $is_correct_taxonomy = true;
         }
 
@@ -149,12 +149,21 @@ class Realia_Filter {
             );
         }
 
-        // Contract
-        if ( ! empty( $_GET['filter-contract-type'] ) ) {
+	    // Amenity
+	    if ( ! empty( $_GET['filter-amenity'] ) ) {
+		    $taxonomies[] = array(
+			    'taxonomy'  => 'amenities',
+			    'field'     => 'id',
+			    'terms'     => $_GET['filter-amenity'],
+		    );
+	    }
+
+        // Status
+        if ( ! empty( $_GET['filter-status'] ) ) {
             $taxonomies[] = array(
-                'taxonomy'  => 'contracts',
+                'taxonomy'  => 'statuses',
                 'field'     => 'id',
-                'terms'     => $_GET['filter-contract-type'],
+                'terms'     => $_GET['filter-status'],
             );
         }
 
@@ -185,6 +194,24 @@ class Realia_Filter {
                 'type'      => 'NUMERIC',
             );
         }
+
+	    // Contract
+	    if ( ! empty( $_GET['filter-contract'] ) ) {
+		    $meta[] = array(
+			    'key'       => REALIA_PROPERTY_PREFIX . 'contract',
+			    'value'     => $_GET['filter-contract'],
+		    );
+	    }
+
+	    // Rooms
+	    if ( ! empty( $_GET['filter-rooms'] ) ) {
+		    $meta[] = array(
+			    'key'       => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+			    'value'     => $_GET['filter-rooms'],
+			    'compare'   => '>=',
+			    'type'      => 'NUMERIC',
+		    );
+	    }
 
         // Beds
         if ( ! empty( $_GET['filter-beds'] ) ) {

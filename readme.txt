@@ -3,7 +3,7 @@ Contributors: pragmaticmates
 Tags: real estate, agent, listing, estator, realestate, agent, agency, house, directory, property
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -52,10 +52,13 @@ purposes or directory listings.
 * Image gallery
 * Location
 * Property type
+* Status
+* Contract
 * Material
 * Amenities
 * Address
 * Property ID
+* Year built
 * Featured
 * Sticky
 * Reduced
@@ -67,7 +70,6 @@ purposes or directory listings.
 * Garages
 * Home area & Lot size (dimensions + area)
 * GPS position
-* Contract type
 * Description
 * Floor plans
 * Land valuation
@@ -159,6 +161,17 @@ Create at least one agent at first and then choose the one you wish to assign in
 9. User properties
 
 == Changelog ==
+
+= 0.3.0 =
+*Release Date - 2nd June, 2015*
+
+* Added amenities, status, contract, rooms filters
+* Options to select property layout in "Properties" widget
+* Read more text for property boxes
+* Call Realia_Template_Loader:locate() with plugin param
+* New CMB2 version
+* Templates cleanup
+* Updated translation catalogue
 
 = 0.2.0 =
 *Release Date - 29th May, 2015*

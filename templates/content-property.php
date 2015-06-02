@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php $index = 0; ?>
 				<?php foreach ( $gallery as $id => $src ) : ?>
 					<li <?php echo ( $index == 0 ) ? 'class="active"' : ''; ?>>
-						<a rel="<?php echo esc_url( $src ); ?>"></a>
+						<a rel="<?php echo esc_url( $src ); ?>"><?php echo __( 'Show', 'realia' ); ?></a>
 						<?php $index++; ?>
 					</li>
 				<?php endforeach; ?>
@@ -64,14 +64,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<dt><?php echo __( 'ID', 'realia' ); ?></dt><dd><?php echo esc_attr( $id ); ?></dd>
 				<?php endif; ?>
 
+				<?php $year_built = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'year_built', true ); ?>
+				<?php if ( ! empty( $year_built ) ) : ?>
+					<dt><?php echo __( 'Year built', 'realia' ); ?></dt><dd><?php echo esc_attr( $year_built ); ?></dd>
+				<?php endif; ?>
+
 				<?php $type = Realia_Query::get_property_type_name(); ?>
 				<?php if ( ! empty ( $type ) ) : ?>
 					<dt><?php echo __( 'Type', 'realia' ); ?></dt><dd><?php echo esc_attr( $type ); ?></dd>
 				<?php endif; ?>
 
-				<?php $contract = Realia_Query::get_property_contract_name(); ?>
+				<?php $sold = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'sold', true ); ?>
+				<dt><?php echo __( 'Sold', 'realia' ); ?></dt>
+				<dd>
+					<?php if ( ! empty( $sold ) ) : ?>
+						<?php echo __( 'Yes', 'realia' ); ?>
+					<?php else : ?>
+						<?php echo __( 'No', 'realia' ); ?>
+					<?php endif; ?>
+				</dd>
+
+				<?php $contract = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'contract', true ); ?>
+
 				<?php if ( ! empty ( $contract ) ) : ?>
-					<dt><?php echo __( 'Contract', 'realia' ); ?></dt><dd><?php echo esc_attr( $contract ); ?></dd>
+					<dt><?php echo __( 'Contract', 'realia' ); ?></dt>
+					<dd>
+						<?php if ( $contract == REALIA_CONTRACT_RENT ) : ?>
+							<?php echo __( 'Rent', 'realia' ); ?>
+						<?php elseif ( $contract == REALIA_CONTRACT_SALE ) : ?>
+							<?php echo __( 'Sale', 'realia' ); ?>
+						<?php endif; ?>
+					</dd>
+				<?php endif; ?>
+
+				<?php $status = Realia_Query::get_property_status_name(); ?>
+				<?php if ( ! empty ( $status ) ) : ?>
+					<dt><?php echo __( 'Status', 'realia' ); ?></dt><dd><?php echo esc_attr( $status ); ?></dd>
 				<?php endif; ?>
 
                 <?php $location = Realia_Query::get_property_location_name(); ?>
@@ -339,7 +367,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	?>
 
 	<footer class="entry-footer">
-		<?php twentyfifteen_entry_meta(); ?>
 		<?php edit_post_link( __( 'Edit', 'realia' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-footer -->
 
