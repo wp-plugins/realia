@@ -6,6 +6,19 @@ Complete real estate solution in one plugin. Create your real estate website or 
 
 You can try it out by visiting a preview demo at [http://preview.wprealia.com/plugin/realia](http://preview.wprealia.com/plugin/realia "Demo").
 
+### WP REST API integration
+
+Plugin offers option to search for properties via API. Plugin adds options to filter properties by custom fields. Realia
+extends default API output by new fields as well. Check an API request at
+[http://preview.wprealia.com/plugin/realia/wp-json/posts?type=property&filter-beds=3](http://wprealia.com "WP Realia") to see how
+easy is to filter by custom fields. It is possible to filter by same fields as plugin uses in front end widgets. So there are
+available more than 20+ fields.
+
+> Interested in iOS app written in Swift? Don't hesitate and contact us and we can offer you Realia Browser app for your site.
+>
+> Check the app documentation: [http://wprealia.com/en/documentation/realia-browser/overview/](http://wprealia.com/en/documentation/realia-browser/overview/ "Realia Browser")
+
+
 ### Front end submission system
 
 Realia allows to add properties by your users. Create the property directory by few clicks. If you want you can review
@@ -102,8 +115,23 @@ purposes or directory listings.
 
 * Locations
 * Property types
-* Contracts
+* Statuses
 * Amenities
+* Materials
+
+### Custom actions
+
+* realia_before_property_archive
+* realia_after_property_archive
+* realia_before_agency_archive
+* realia_after_agency_archive
+* realia_before_agent_archive
+* realia_after_agent_archive
+
+* realia_before_property_box_title
+* realia_after_property_box_title
+* realia_before_property_box_body
+* realia_after_property_box_body
 
 ### Shortcodes
 
@@ -156,6 +184,33 @@ Create at least one agent at first and then choose the one you wish to assign in
 9. User properties
 
 ## Changelog
+
+**0.5.0**
+
+*Release Date - 16th Jine, 2015*
+
+* WP API for agents
+* WP API for agencies
+* Added Rent/Sale search widget
+* All search fields are orderable
+* Added multiple search fields
+* Refactored agents, agencies and properties templates
+* Agent custom post type admin columns
+* Location taxonomies are now hierarchical
+* Breadcrumb now has better structure
+* Other small improvements and fixes
+
+**0.4.0**
+
+*Release Date - 3nd June, 2015*
+
+* WP API properties filter functionality
+* PayPal libraries are loading after filling credentials
+* Added material search filter
+* Property sorting
+* New archive pages actions
+* CMB2 moved to TGM
+* PayPal library cleanup
 
 **0.3.0**
 

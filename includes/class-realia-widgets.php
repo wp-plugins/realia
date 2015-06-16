@@ -36,7 +36,8 @@ class Realia_Widgets {
         require_once REALIA_DIR . 'includes/widgets/class-realia-widget-enquire.php';
         require_once REALIA_DIR . 'includes/widgets/class-realia-widget-properties.php';
         require_once REALIA_DIR . 'includes/widgets/class-realia-widget-properties-map.php';
-        require_once REALIA_DIR . 'includes/widgets/class-realia-widget-vertical-filter.php';
+        require_once REALIA_DIR . 'includes/widgets/class-realia-widget-filter.php';
+	    require_once REALIA_DIR . 'includes/widgets/class-realia-widget-filter-rent-sale.php';
     }
 
     /**
@@ -48,7 +49,8 @@ class Realia_Widgets {
     public static function register() {
         register_widget( 'Realia_Widget_Agents' );
         register_widget( 'Realia_Widget_Agent_Assigned' );
-        register_widget( 'Realia_Widget_Vertical_Filter' );
+        register_widget( 'Realia_Widget_Filter' );
+	    register_widget( 'Realia_Widget_Filter_Rent_Sale' );
         register_widget( 'Realia_Widget_Enquire' );
         register_widget( 'Realia_Widget_Properties' );
         register_widget( 'Realia_Widget_Properties_Map' );
