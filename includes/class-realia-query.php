@@ -136,7 +136,10 @@ class Realia_Query {
             return $property_locations[$post_id];
         }
 
-        $locations = wp_get_post_terms( $post_id, 'locations' );
+        $locations = wp_get_post_terms( $post_id, 'locations', array(
+	        'orderby'   => 'parent',
+	        'order'     => 'DESC'
+        ) );
 
         if ( is_array( $locations ) && count( $locations ) > 0 ) {
             $output = '';
@@ -144,7 +147,7 @@ class Realia_Query {
             $locations = array_reverse($locations);
 
             foreach ( $locations as $key => $location ) {
-                $output .= $location->name;
+                $output .= '<a href="' . get_term_link( $location, 'locations' ). '">' . $location->name . '</a>';
 
                 if ( array_key_exists( $key + 1, $locations ) ) {
                     $output .= ' <span class="separator">' . $separator . '</span> ';

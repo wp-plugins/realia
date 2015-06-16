@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php $title = ! empty( $instance['title'] ) ? $instance['title'] : ''; ?>
+<?php $description = ! empty( $instance['description'] ) ? $instance['description'] : ''; ?>
+<?php $classes = ! empty( $instance['classes'] ) ? $instance['classes'] : ''; ?>
 <?php $count = ! empty( $instance['count'] ) ? $instance['count'] : 3; ?>
 <?php $per_row = ! empty( $instance['per_row'] ) ? $instance['per_row'] : 3; ?>
 <?php $attribute = ! empty( $instance['attribute'] ) ? $instance['attribute'] : ''; ?>
@@ -21,6 +23,33 @@ if ( ! defined( 'ABSPATH' ) ) {
             name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"
             type="text"
             value="<?php echo esc_attr( $title ); ?>">
+</p>
+
+<!-- DESCRIPTION -->
+<p>
+	<label for="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>">
+		<?php echo __( 'Description', 'realia' ); ?>
+	</label>
+
+	<textarea class="widefat"
+	          rows="4"
+	          id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>"
+	          name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>"><?php echo esc_attr( $description ); ?></textarea>
+</p>
+
+<!-- CLASSES -->
+<p>
+	<label for="<?php echo esc_attr( $this->get_field_id( 'classes' ) ); ?>">
+		<?php echo __( 'Classes', 'realia' ); ?>
+	</label>
+
+	<input  class="widefat"
+	        id="<?php echo esc_attr( $this->get_field_id( 'classes' ) ); ?>"
+	        name="<?php echo esc_attr( $this->get_field_name( 'classes' ) ); ?>"
+	        type="text"
+	        value="<?php echo esc_attr( $classes ); ?>">
+	<br>
+	<small><?php echo __( 'Additional classes e.g. <i>fullwidth background-gray</i>', 'realia' ); ?></small>
 </p>
 
 <!-- COUNT -->
@@ -106,6 +135,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<option value="0"><?php echo __( 'Select', 'realia' ); ?></option>
 		<option value="box" <?php echo ( $display == 'box'  || empty( $display ) ) ? 'selected="selected"' : ''; ?>><?php echo __( 'Box', 'realia' ); ?></option>
 		<option value="small" <?php echo ( $display == 'small' ) ? 'selected="selected"' : ''; ?>><?php echo __( 'Small', 'realia' ); ?></option>
-		<option value="only-image" <?php echo ( $display == 'only-image' ) ? 'selected="selected"' : ''; ?>><?php echo __( 'Only image', 'realia' ); ?></option>
+		<option value="row" <?php echo ( $display == 'row' ) ? 'selected="selected"' : ''; ?>><?php echo __( 'Row', 'realia' ); ?></option>
 	</select>
 </p>

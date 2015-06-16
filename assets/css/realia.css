@@ -38,6 +38,12 @@
     width: 100%;
 }
 
+.form-group.checkbox label {
+    display: inline;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 .terms-conditions-input {
     margin-top: 20px;
 }
@@ -173,6 +179,60 @@
 .properties-filter-sort-by-wrapper select {
     min-width: 120px;
 }
+
+/*******************************************************************
+ * Rent/Sale Filter
+ *******************************************************************/
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation {
+     margin: 0px;
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation:after {
+     content: '';
+     clear: both;
+     display: block;
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation ul {
+     list-style: none;
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation li {
+     border: 1px solid #eaeaea;
+     border-bottom: 0px;
+     display: block;
+     float: left;
+     list-style: none;
+     margin: 0px 3px 0px 0px;
+     position: relative;
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation li a {
+     background-color: rgba(0, 0, 0, .01);
+     display: block;
+     outline: 0px;
+     padding: 8px 15px;
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation li.active {
+     border-bottom: 1px solid #fff;
+     margin-bottom: -1px;
+     z-index: 9999
+ }
+
+ .widget_filter_rent_sale_widget .tabs .tabs-navigation li.active a {
+     background-color: #fff;
+ }
+
+ .widget_filter_rent_sale_widget .tab-content {
+     border: 1px solid #eaeaea;
+     display: none;
+     padding: 15px;
+ }
+
+ .widget_filter_rent_sale_widget .tab-content.active {
+     display: block;
+ }
 
 /*******************************************************************
  * Property Row
@@ -834,6 +894,12 @@ h2.agency-row-title {
 /*******************************************************************
  * Map
  *******************************************************************/
+ .widget.widget_properties_map {
+     margin: 0px 0px 60px 0px;
+     padding: 0px;
+     list-style: none;
+ }
+
 .map-wrapper {
     background-color: #fff;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), inset 0px 0px 30px 0px rgba(0, 0, 0, .08);
@@ -903,10 +969,8 @@ h2.agency-row-title {
     width: 50px;
 }
 
-.marker .multiple {
-    &:hover {
+.marker .multiple:hover {
         transform: scale(1);
-    }
 }
 
 /*******************************************************************
@@ -961,7 +1025,7 @@ h2.agency-row-title {
 }
 
 .infobox-image {
-    background-color: rgba(black, .12);
+    background-color: rgba(0, 0, 0, .12);
     border-radius: 2px 0px 0px 2px;
     display: block;
     float: left;
@@ -1046,7 +1110,7 @@ h2.agency-row-title {
 
 .infobox-content-price {
     background-color: #fff;
-    box-shadow: 0px 2px 2px 0px rgba(black, .12);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, .12);
     font-size: 11px;
     font-weight: 600;
     left: 7px;
