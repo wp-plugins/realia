@@ -3,7 +3,7 @@ Contributors: pragmaticmates
 Tags: real estate, agent, listing, estator, realestate, agent, agency, house, directory, property
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,9 +15,7 @@ You can try it out by visiting a preview demo at [http://preview.wprealia.com/pl
 
 ### WP REST API integration
 
-Plugin offers option to search for properties via API. Plugin adds options to filter properties by custom fields. Realia
-extends default API output by new fields as well. Check an API request at [http://preview.wprealia.com/plugin/realia/wp-json/posts?type=property&filter-beds=3](http://preview.wprealia.com/plugin/realia/wp-json/posts?type=property&filter-beds=3) to see how easy is to filter by custom fields. It is possible to filter by same fields as plugin uses in front end widgets. So there are
-available more than 20+ fields.
+Plugin offers option to search for properties via API. Plugin adds options to filter properties by custom fields. Realia extends default API output by new fields as well. Check an API request at [http://preview.wprealia.com/plugin/realia/wp-json/posts?type=property&filter-beds=3](http://preview.wprealia.com/plugin/realia/wp-json/posts?type=property&filter-beds=3) to see how easy is to filter by custom fields. It is possible to filter by same fields as plugin uses in front end widgets. So there are available more than 20+ fields.
 
 > Interested in iOS app written in Swift? Don't hesitate and contact us and we can offer you Realia Browser app for your site.
 >
@@ -25,14 +23,11 @@ available more than 20+ fields.
 
 ### Front end submission system
 
-Realia allows to add properties by your users. Create the property directory by few clicks. If you want you can review
-newly added properties before publishing. Of course it is possible to charge users for using your website. Plugins has
-builtin pay per post and package system.
+Realia allows to add properties by your users. Create the property directory by few clicks. If you want you can review newly added properties before publishing. Of course it is possible to charge users for using your website. Plugins has builtin pay per post and package system.
 
 ### Property management
 
-Manage properties from WordPress admin. Custom version of table display is containing all important information about
-properties like featured image, price and assigned taxonomy terms.
+Manage properties from WordPress admin. Custom version of table display is containing all important information about properties like featured image, price and assigned taxonomy terms.
 
 ### Price formatting options
 
@@ -44,8 +39,7 @@ Are you developer and still not satisfied with price formatting? Don't worry. Ev
 
 ### Agencies & Agents
 
-With Realia plugin you are able to assign agent to properties and create agencies grouping agents. Great for internal
-purposes or directory listings.
+With Realia plugin you are able to assign agents to properties and create agencies grouping agents. Great for internal purposes or directory listings.
 
 ### Widgets
 
@@ -53,7 +47,7 @@ purposes or directory listings.
 * Vertical filter
 * Properties
 * Agents
-* Assigned agent to property
+* Assigned agents to property
 * Enquire form
 
 ### Property Attributes
@@ -142,6 +136,9 @@ purposes or directory listings.
 * `[realia_login]` Login page.
 * `[realia_logout]` Logout page.
 * `[realia_register]` Register page.
+* `[realia_change_password]` Change password page.
+* `[realia_change_profile]` Change profile page.
+* `[realia_change_agent_profile]` Change agent profile page.
 * `[realia_submission]` Create and edit property form.
 * `[realia_submission_list]` List of properties added by current user.
 * `[realia_submission_remove]` Remove property.
@@ -190,6 +187,20 @@ Just be sure you are running at least PHP 5.3.4
 9. User properties
 
 == Changelog ==
+
+= 0.6.0 =
+
+*Release Date - 24th June, 2015*
+
+* user can be registered as agent
+* breadcrumb update
+* slovak translation
+* agents and agencies admin table update
+* custom public facilities and valuations
+* property can have more assigned agents
+* refactored property fields with 'attributes_' prefix
+* realia_change_password, realia_change_profile, realia_change_agent_profile shortcodes
+* some fixes
 
 = 0.5.0 =
 

@@ -13,6 +13,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Realia_Query {
     /**
+     * Gets agent ID of currently signed in user
+     *
+     * @access public
+     * @return int
+     */
+    public static function get_current_user_assigned_agent_id() {
+        $user_id = get_current_user_id(); 
+
+        if ( ! empty( $user_id ) ) {
+            $agent_id = get_user_meta( $user_id, REALIA_USER_PREFIX . 'agent_object', true );
+
+            if ( ! empty( $agent_id ) ) {
+                return $agent_id;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Gets user properties
      *
      * @access public
@@ -26,6 +46,29 @@ class Realia_Query {
             'posts_per_page'    => -1,
             'post_status'       => 'any'
         ) );
+    }
+
+    /**
+     * Sets property agent
+     *
+     * @access public
+     * @param int $property_id
+     * @param int $agent_id
+     * @return void
+     */
+    public static function set_property_agent( $property_id, $agent_id ) {
+        $agents = get_post_meta( $property_id, REALIA_PROPERTY_PREFIX . 'agents', true );
+
+        // We have already assigned agents so just add new one
+        if ( ! empty( $agents ) && is_array( $agents )) {
+            $agents[] = $agent_id;
+        } 
+        // Add first agent
+        else {
+            $agents = array( $agent_id );
+        }
+
+        update_post_meta( $property_id, REALIA_PROPERTY_PREFIX . 'agents', $agents );        
     }
 
     /**
@@ -101,20 +144,20 @@ class Realia_Query {
      *
      * @access public
      * @param null $post_id
-     * @return bool|null|WP_Post
+     * @return array
      */
-    public static function get_property_agent( $post_id = null ) {
+    public static function get_property_agents( $post_id = null ) {
         if ( $post_id == null ) {
             $post_id = get_the_ID();
         }
 
-        $agent_id = get_post_meta( $post_id, REALIA_PROPERTY_PREFIX . 'agents', true );
+        $agents_ids = get_post_meta( $post_id, REALIA_PROPERTY_PREFIX . 'agents', true );        
 
-        if ( is_array( $agent_id ) && ! empty( $agent_id[0] ) ) {
-            return get_post( $agent_id[0] );
+        if ( is_array( $agents_ids ) && ! empty( $agents_ids[0] ) ) {
+            return $agents_ids;
         }
 
-        return false;
+        return array();
     }
 
     /**
@@ -321,19 +364,37 @@ class Realia_Query {
     }
 
     /**
+     * Gets agencies
+     * 
+     * @access public
+     * @param int $count
+     * @return WP_Query
+     */
+    public static function get_agencies( $count = -1 ) {
+        $args = array(
+            'post_type'         => 'agency',
+            'posts_per_page'    => $count
+        );
+
+        return new WP_Query( $args );
+    }
+
+    /**
      * Sets agency agents into loop
      *
      * @access public
      * @param null|int $post_id
+     * @param null|int $count
      * @return void
      */
-    public static function loop_agency_agents( $post_id = null ) {
+    public static function loop_agency_agents( $post_id = null, $count = null ) {
         if ( $post_id == null ) {
             $post_id = get_the_ID();
         }
 
         $args = array(
             'post_type'         => 'agent',
+            'posts_per_page'    => -1,
             'meta_query'        => array(
                 array(
                     'key'       => REALIA_AGENT_PREFIX . 'agencies',
@@ -342,6 +403,10 @@ class Realia_Query {
                 ),
             ),
         );
+
+	    if ( ! empty( $count ) ) {
+		    $args['posts_per_page'] = $count;
+	    }
 
         query_posts( $args );
     }
@@ -360,6 +425,7 @@ class Realia_Query {
 
         $args = array(
             'post_type'         => 'agent',
+            'posts_per_page'    => -1,
             'meta_query'        => array(
                 array(
                     'key'       => REALIA_AGENT_PREFIX . 'agencies',
@@ -367,6 +433,22 @@ class Realia_Query {
                     'compare'   => 'LIKE'
                 ),
             ),
+        );
+
+        return new WP_Query( $args );
+    }
+
+    /**
+     * Gets all agents
+     *
+     * @access public
+     * @param int $count
+     * @return WP_Query
+     */
+    public static function get_agents( $count = -1) {
+        $args = array(
+            'post_type'         => 'agent',
+            'posts_per_page'    => $count,
         );
 
         return new WP_Query( $args );
@@ -386,6 +468,7 @@ class Realia_Query {
 
         $args = array(
             'post_type'         => 'property',
+            'posts_per_page'    => -1,
             'meta_query'        => array(
                 array(
                     'key'       => REALIA_PROPERTY_PREFIX . 'agents',
@@ -412,6 +495,7 @@ class Realia_Query {
 
         $args = array(
             'post_type'         => 'property',
+            'posts_per_page'    => -1,
             'meta_query'        => array(
                 array(
                     'key'       => REALIA_PROPERTY_PREFIX . 'agents',
