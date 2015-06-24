@@ -19,6 +19,9 @@ class Realia_Filter {
      * @return void
      */
     public static function init() {
+        add_filter( 'realia_filter_fields', array( __CLASS__, 'default_fields' ) );
+        add_filter( 'realia_filter_field_names', array( __CLASS__, 'default_field_names' ) );
+
         add_action( 'pre_get_posts', array( __CLASS__, 'archive' ) );
         add_action( 'pre_get_posts', array( __CLASS__, 'taxonomy') );
 	    add_action( 'realia_before_property_archive', array( __CLASS__, 'sort_template' ) );
@@ -37,6 +40,36 @@ class Realia_Filter {
 		}
 	}
 
+    /**
+     * List of default fields defined by plugin
+     *
+     * @access public
+     * @return void
+     */
+    public static function default_fields() {
+        return array(
+            'id'            => __( 'Property ID', 'realia' ),
+            'location'      => __( 'Location', 'realia' ),
+            'property_type' => __( 'Property type', 'realia' ),
+            'amenity'       => __( 'Amenity', 'realia' ),
+            'status'        => __( 'Status', 'realia' ),
+            'contract'      => __( 'Contract', 'realia' ),
+            'material'      => __( 'Material', 'realia' ),
+            'price'         => __( 'Price', 'realia' ),
+            'rooms'         => __( 'Rooms', 'realia' ),
+            'baths'         => __( 'Baths', 'realia' ),
+            'beds'          => __( 'Beds', 'realia' ),
+            'year_built'    => __( 'Year built', 'realia' ),
+            'home_area'     => __( 'Home area', 'realia' ),
+            'lot_area'      => __( 'Lot area', 'realia' ),
+            'garages'       => __( 'Garages', 'realia' ),
+            'featured'      => __( 'Featured', 'realia' ),
+            'reduced'       => __( 'Reduced', 'realia' ),
+            'sticky'        => __( 'Sticky', 'realia' ),
+            'sold'          => __( 'Sold', 'realia' ),
+        );
+    }
+
 	/**
 	 * Returns list of available filter fields templates
 	 *
@@ -44,28 +77,24 @@ class Realia_Filter {
 	 * @return array
 	 */
 	public static function get_fields() {
-		return array(
-			'id'            => __( 'Property ID', 'realia' ),
-			'location'      => __( 'Location', 'realia' ),
-			'property_type' => __( 'Property type', 'realia' ),
-			'amenity'       => __( 'Amenity', 'realia' ),
-			'status'        => __( 'Status', 'realia' ),
-			'contract'      => __( 'Contract', 'realia' ),
-			'material'      => __( 'Material', 'realia' ),
-			'price'         => __( 'Price', 'realia' ),
-			'rooms'         => __( 'Rooms', 'realia' ),
-			'baths'         => __( 'Baths', 'realia' ),
-			'beds'          => __( 'Beds', 'realia' ),
-			'year_built'    => __( 'Year built', 'realia' ),
-			'home_area'     => __( 'Home area', 'realia' ),
-			'lot_area'      => __( 'Lot area', 'realia' ),
-			'garages'       => __( 'Garages', 'realia' ),
-			'featured'      => __( 'Featured', 'realia' ),
-			'reduced'       => __( 'Reduced', 'realia' ),
-			'sticky'        => __( 'Sticky', 'realia' ),
-			'sold'          => __( 'Sold', 'realia' ),
-		);
+        $fields = self::default_fields();
+        return apply_filters( 'realia_filter_fields', array() );
 	}
+
+    /**
+     * Default filter field names
+     *
+     * @access public
+     * @return array
+     */
+    public static function default_field_names() {
+        return array(
+            'filter-id', 'filter-location', 'filter-property-type', 'filter-amenity', 'filter-status', 'filter-contract',
+            'filter-material', 'filter-price-from', 'filter-price-to', 'filter-rooms', 'filter-baths', 'filter-beds', 'filter-year-built',
+            'filter-home-area-from', 'filter-home-area-to', 'filter-garages', 'filter-featured', 'filter-reduced', 'filter-sticky', 'filter-sold',
+            'filter-lot-area-from', 'filter-lot-area-to',
+        );
+    }
 
 	/**
 	 * Return all filter field names
@@ -73,13 +102,8 @@ class Realia_Filter {
 	 * @access public
 	 * @return array
 	 */
-	public static function get_field_names() {
-		return array(
-			'filter-id', 'filter-location', 'filter-property-type', 'filter-amenity', 'filter-status', 'filter-contract',
-			'filter-material', 'filter-price-from', 'filter-price-to', 'filter-rooms', 'filter-baths', 'filter-beds', 'filter-year-built',
-			'filter-home-area-from', 'filter-home-area-to', 'filter-garages', 'filter-featured', 'filter-reduced', 'filter-sticky', 'filter-sold',
-			'filter-lot-area-from', 'filter-lot-area-to',
-		);
+	public static function get_field_names() {        
+		return apply_filters( 'realia_filter_field_names', array() );
 	}
 
     /**
@@ -142,9 +166,6 @@ class Realia_Filter {
         if ( ! is_post_type_archive( 'property' ) || ! $query->is_main_query() || is_admin() || $query->query_vars['post_type'] != 'property' || $suppress_filters ) {
             return;
         }
-
-        $taxonomies = array();
-        $meta = array();
 
         if ( ! empty( $_GET['filter-sort-order'] ) ) {
             $query->set( 'order', $_GET['filter-sort-order']);
@@ -330,7 +351,7 @@ class Realia_Filter {
 	    // Rooms
 	    if ( ! empty( $_GET['filter-rooms'] ) ) {
 		    $meta[] = array(
-			    'key'       => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+			    'key'       => REALIA_PROPERTY_PREFIX . 'rooms',
 			    'value'     => $_GET['filter-rooms'],
 			    'compare'   => '>=',
 			    'type'      => 'NUMERIC',
@@ -340,7 +361,7 @@ class Realia_Filter {
         // Beds
         if ( ! empty( $_GET['filter-beds'] ) ) {
             $meta[] = array(
-                'key'       => REALIA_PROPERTY_PREFIX . 'attributes_beds',
+                'key'       => REALIA_PROPERTY_PREFIX . 'beds',
                 'value'     => $_GET['filter-beds'],
                 'compare'   => '>=',
                 'type'      => 'NUMERIC',
@@ -360,7 +381,7 @@ class Realia_Filter {
         // Baths
         if ( ! empty( $_GET['filter-baths'] ) ) {
             $meta[] = array(
-                'key'       => REALIA_PROPERTY_PREFIX . 'attributes_baths',
+                'key'       => REALIA_PROPERTY_PREFIX . 'baths',
                 'value'     => $_GET['filter-baths'],
                 'compare'   => '>=',
                 'type'      => 'NUMERIC',
@@ -370,7 +391,7 @@ class Realia_Filter {
         // Home area from
         if ( ! empty( $_GET['filter-home-area-from'] ) ) {
             $meta[] = array(
-                'key'       => REALIA_PROPERTY_PREFIX . 'attributes_home_area',
+                'key'       => REALIA_PROPERTY_PREFIX . 'home_area',
                 'value'     => $_GET['filter-home-area-from'],
                 'compare'   => '>=',
                 'type'      => 'NUMERIC',
@@ -380,7 +401,7 @@ class Realia_Filter {
 	    // Home area to
 	    if ( ! empty( $_GET['filter-home-area-to'] ) ) {
 		    $meta[] = array(
-			    'key'       => REALIA_PROPERTY_PREFIX . 'attributes_home_area',
+			    'key'       => REALIA_PROPERTY_PREFIX . 'home_area',
 			    'value'     => $_GET['filter-home-area-to'],
 			    'compare'   => '<=',
 			    'type'      => 'NUMERIC',
@@ -390,7 +411,7 @@ class Realia_Filter {
 	    // Lot area from
 	    if ( ! empty( $_GET['filter-lot-area-from'] ) ) {
 		    $meta[] = array(
-			    'key'       => REALIA_PROPERTY_PREFIX . 'attributes_lot_area',
+			    'key'       => REALIA_PROPERTY_PREFIX . 'lot_area',
 			    'value'     => $_GET['filter-lot-area-from'],
 			    'compare'   => '>=',
 			    'type'      => 'NUMERIC',
@@ -400,7 +421,7 @@ class Realia_Filter {
 	    // Lot area to
 	    if ( ! empty( $_GET['filter-lot-area-to'] ) ) {
 		    $meta[] = array(
-			    'key'       => REALIA_PROPERTY_PREFIX . 'attributes_lot_area',
+			    'key'       => REALIA_PROPERTY_PREFIX . 'lot_area',
 			    'value'     => $_GET['filter-lot-area-to'],
 			    'compare'   => '<=',
 			    'type'      => 'NUMERIC',
@@ -410,7 +431,7 @@ class Realia_Filter {
         // Garages
         if ( ! empty( $_GET['filter-garages'] ) ) {
             $meta[] = array(
-                'key'       => REALIA_PROPERTY_PREFIX . 'attributes_garages',
+                'key'       => REALIA_PROPERTY_PREFIX . 'garages',
                 'value'     => $_GET['filter-garages'],
                 'compare'   => '>=',
                 'type'      => 'NUMERIC',

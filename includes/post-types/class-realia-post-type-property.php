@@ -196,39 +196,39 @@ class Realia_Post_Type_Property {
             'show_names'                => true,
             'fields'                    => array(
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'rooms',
                     'name'              => __( 'Rooms', 'realia' ),
                     'type'              => 'text',
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_beds',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'beds',
                     'name'              => __( 'Beds', 'realia' ),
                     'type'              => 'text',
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_baths',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'baths',
                     'name'              => __( 'Baths', 'realia' ),
                     'type'              => 'text',
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_garages',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'garages',
                     'name'              => __( 'Garages', 'realia' ),
                     'type'              => 'text',
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_home_area',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'home_area',
                     'name'              => __( 'Home area', 'realia' ),
                     'type'              => 'text',
                     'description'       => __( 'In unit set in settings.', 'realia' ),
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_lot_dimensions',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'lot_dimensions',
                     'name'              => __( 'Lot dimensions', 'realia' ),
                     'type'              => 'text',
                     'description'       => __( 'e.g. 20x30, 20x30x40, 20x30x40x50', 'realia' ),
                 ),
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'attributes_lot_area',
+                    'id'                => REALIA_PROPERTY_PREFIX . 'lot_area',
                     'name'              => __( 'Lot area', 'realia' ),
                     'type'              => 'text',
                     'description'       => __( 'In unit set in settings.', 'realia' ),
@@ -245,35 +245,21 @@ class Realia_Post_Type_Property {
             'show_names'                => true,
             'fields'                    => array(
                 array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_crime',
-                    'name'              => __( 'Crime', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'In percentage.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_traffic',
-                    'name'              => __( 'Traffic', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'In percentage.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_pollution',
-                    'name'              => __( 'Pollution', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'In percentage.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_education',
-                    'name'              => __( 'Education', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'In percentage.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_health',
-                    'name'              => __( 'Health', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'In percentage.', 'realia' ),
-                ),
+                    'id'                => REALIA_PROPERTY_PREFIX . 'valuation_group',
+                    'type'              => 'group',
+                    'fields'            => array(
+                        array(
+                            'id'                => REALIA_PROPERTY_PREFIX . 'valuation_key',
+                            'name'              => __( 'Key', 'realia' ),
+                            'type'              => 'text',
+                        ),                        
+                        array(
+                            'id'                => REALIA_PROPERTY_PREFIX . 'valuation_value',
+                            'name'              => __( 'Value', 'realia' ),
+                            'type'              => 'text',
+                        ),                                                
+                    ),
+                ),            
             )
         );
 
@@ -285,42 +271,22 @@ class Realia_Post_Type_Property {
             'priority'                  => 'high',
             'show_names'                => true,
             'fields'                    => array(
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_city',
-                    'name'              => __( 'City center', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_shop',
-                    'name'              => __( 'Shop', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_hospital',
-                    'name'              => __( 'Hospital', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_school',
-                    'name'              => __( 'School', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_cpt',
-                    'name'              => __( 'CPT stop', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( '(City Public Transport). Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
-                array(
-                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_airport',
-                    'name'              => __( 'Airport', 'realia' ),
-                    'type'              => 'text',
-                    'description'       => __( 'Any text. For example distance: 2 km, or 10 min.', 'realia' ),
-                ),
+               array(
+                    'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_group',
+                    'type'              => 'group',
+                    'fields'            => array(
+                        array(
+                            'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_key',
+                            'name'              => __( 'Key', 'realia' ),
+                            'type'              => 'text',
+                        ),                        
+                        array(
+                            'id'                => REALIA_PROPERTY_PREFIX . 'public_facilities_value',
+                            'name'              => __( 'Value', 'realia' ),
+                            'type'              => 'text',
+                        ),                                                
+                    ),
+                ),   
             )
         );
 
@@ -342,17 +308,14 @@ class Realia_Post_Type_Property {
             )
         );
 
-	    $relations = array(
-		    array(
-			    'name'              => __( 'Agents', 'realia' ),
-			    'id'                => REALIA_PROPERTY_PREFIX . 'agents',
-			    'type'              => 'custom_attached_posts',
-			    'options'           => array(
-				    'single'        => true,
-				    'query_args'    => array( 'posts_per_page' => -1, 'post_type' => 'agent' ),
-			    ),
-		    )
-	    );
+        $agents = array();
+        $agents_objects = Realia_Query::get_agents();
+
+        if ( ! empty( $agents_objects->posts ) && is_array( $agents_objects->posts ) ) {
+            foreach ( $agents_objects->posts as $object ) {
+                $agents[$object->ID] = $object->post_title;
+            }
+        }
 
         $metaboxes[REALIA_PROPERTY_PREFIX . 'relations'] = array(
             'id'                        => REALIA_PROPERTY_PREFIX . 'relations',
@@ -361,7 +324,14 @@ class Realia_Post_Type_Property {
             'context'                   => 'normal',
             'priority'                  => 'high',
             'show_names'                => true,
-            'fields'                    => $relations,
+            'fields'                    => array(
+                array(
+                    'name'              => __( 'Agents', 'realia' ),
+                    'id'                => REALIA_PROPERTY_PREFIX . 'agents',
+                    'type'              => 'multicheck',
+                    'options'           => $agents,
+                ),
+            )
         );
 
         return $metaboxes;
@@ -390,6 +360,11 @@ class Realia_Post_Type_Property {
                 'show_names'                => true,
                 'fields'                    => array(
                     array(
+                        'id'                => REALIA_PROPERTY_PREFIX . 'post_type',
+                        'type'              => 'hidden',
+                        'default'           => 'property',
+                    ),                         
+                    array(
                         'name'              => __( 'Title', 'realia' ),
                         'id'                => REALIA_PROPERTY_PREFIX . 'title',
                         'type'              => 'text_medium',
@@ -405,7 +380,7 @@ class Realia_Post_Type_Property {
                         'name'              => __( 'Featured Image', 'realia' ),
                         'id'                => REALIA_PROPERTY_PREFIX . 'featured_image',
                         'type'              => 'file',
-                        'default'           => ! empty( $featured_image) ? $featured_image[0] : '',
+                        'default'           => ! empty( $featured_image ) ? $featured_image[0] : '',
                     ),
                     array(
                         'name'              => __( 'ID', 'realia' ),
@@ -424,27 +399,27 @@ class Realia_Post_Type_Property {
                         'description'       => __( 'Enter amount without currency.', 'realia' ),
                     ),
                     array(
-                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_rooms',
+                        'id'                => REALIA_PROPERTY_PREFIX . 'rooms',
                         'name'              => __( 'Rooms', 'realia' ),
                         'type'              => 'text',
                     ),
                     array(
-                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_beds',
+                        'id'                => REALIA_PROPERTY_PREFIX . 'beds',
                         'name'              => __( 'Beds', 'realia' ),
                         'type'              => 'text',
                     ),
                     array(
-                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_baths',
+                        'id'                => REALIA_PROPERTY_PREFIX . 'baths',
                         'name'              => __( 'Baths', 'realia' ),
                         'type'              => 'text',
                     ),
                     array(
-                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_garages',
+                        'id'                => REALIA_PROPERTY_PREFIX . 'garages',
                         'name'              => __( 'Garages', 'realia' ),
                         'type'              => 'text',
                     ),
                     array(
-                        'id'                => REALIA_PROPERTY_PREFIX . 'attributes_area',
+                        'id'                => REALIA_PROPERTY_PREFIX . 'area',
                         'name'              => __( 'Area', 'realia' ),
                         'type'              => 'text',
                     ),
@@ -660,7 +635,7 @@ class Realia_Post_Type_Property {
 
         // Agent
         if ( ! empty( $_POST['receive_agent'] ) ) {
-            $agent = Realia_Query::get_property_agent( $post->ID );
+            $agent = Realia_Query::get_property_agents( $post->ID );
             if ( ! empty( $agent ) ) {
                 $email = get_post_meta( $agent->ID, REALIA_AGENT_PREFIX . 'email', true);
 
@@ -699,7 +674,7 @@ class Realia_Post_Type_Property {
      * @return void
      */
     public static function process_property_form() {
-        if ( ! isset( $_POST['submit-cmb'] ) )  {
+        if ( ! isset( $_POST['submit-cmb'] ) && ! empty( $_POST['post_type'] ) && $_POST['post_type'] == 'property' )  {
             return;
         }
 
@@ -737,6 +712,11 @@ class Realia_Post_Type_Property {
             }
 
             $post_id = wp_insert_post( $data, true );
+            $agent_id = Realia_Query::get_current_user_assigned_agent_id();
+
+            if ( ! empty( $agent_id ) ) {
+                Realia_Query::set_property_agent( $post_id, $agent_id );
+            }
 
             if ( ! empty( $post_id ) && ! empty( $_POST['object_id'] ) ) {
                 $_POST['object_id'] = $post_id;
