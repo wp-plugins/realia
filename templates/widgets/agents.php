@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 ?>
 
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php echo wp_kses( $args['before_widget'], wp_kses_allowed_html( 'post' ) ); ?>
 
 <?php if ( ! empty( $instance['classes'] ) ) : ?>
-	<div class="<?php echo $instance['classes']; ?>">
+	<div class="<?php echo esc_attr($instance['classes']); ?>">
 <?php endif; ?>
 
 <?php if ( ! empty( $instance['title'] ) ) : ?>
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php endif; ?>
 
 	<div class="type-<?php echo esc_attr( $instance['display'] ); ?> item-per-row-<?php echo esc_attr( $instance['per_row'] ); ?>">
-		<?php if ( $instance['per_row'] != 1 ) : ?>
+		<?php if ( 1 != $instance['per_row'] ) : ?>
 			<div class="agents-row">
 		<?php endif; ?>
 
@@ -36,14 +36,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php include Realia_Template_Loader::locate( 'agents/' . $instance['display'] ); ?>
 			</div><!-- /.property-container -->
 
-			<?php if ( ( $index + 1 ) % $instance['per_row'] == 0 && $instance['per_row'] != 1 && Realia_Query::loop_has_next() ) : ?>
+			<?php if ( 0 == ( ( $index + 1 ) % $instance['per_row'] ) && 1 != $instance['per_row'] && Realia_Query::loop_has_next() ) : ?>
 				</div><div class="agents-row">
 			<?php endif; ?>
 
 			<?php $index++; ?>
 		<?php endwhile; ?>
 
-		<?php if ( $instance['per_row'] != 1 ) : ?>
+		<?php if ( 1 != $instance['per_row'] ) : ?>
 			</div><!-- /.properties-row -->
 		<?php endif; ?>
 	</div>

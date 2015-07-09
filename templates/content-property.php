@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 ?>
 
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<ul class="property-gallery-index">
 				<?php $index = 0; ?>
 				<?php foreach ( $gallery as $id => $src ) : ?>
-					<li <?php echo ( $index == 0 ) ? 'class="active"' : ''; ?>>
+					<li <?php echo ( 0 == $index ) ? 'class="active"' : ''; ?>>
 						<a rel="<?php echo esc_url( $src ); ?>"><?php echo __( 'Show', 'realia' ); ?></a>
 						<?php $index++; ?>
 					</li>
@@ -44,9 +44,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<header class="entry-header">
 		<?php
 		if ( is_single() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
+			the_title( '<h1 class="entry-title property-title">', '</h1>' );
 		else :
-			the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
+			the_title( sprintf( '<h2 class="entry-title property-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' );
 		endif;
 		?>
 	</header><!-- .entry-header -->
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 
 				<?php $type = Realia_Query::get_property_type_name(); ?>
-				<?php if ( ! empty ( $type ) ) : ?>
+				<?php if ( ! empty( $type ) ) : ?>
 					<dt><?php echo __( 'Type', 'realia' ); ?></dt><dd><?php echo esc_attr( $type ); ?></dd>
 				<?php endif; ?>
 
@@ -86,24 +86,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<?php $contract = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'contract', true ); ?>
 
-				<?php if ( ! empty ( $contract ) ) : ?>
+				<?php if ( ! empty( $contract ) ) : ?>
 					<dt><?php echo __( 'Contract', 'realia' ); ?></dt>
 					<dd>
-						<?php if ( $contract == REALIA_CONTRACT_RENT ) : ?>
+						<?php if ( REALIA_CONTRACT_RENT == $contract ) : ?>
 							<?php echo __( 'Rent', 'realia' ); ?>
-						<?php elseif ( $contract == REALIA_CONTRACT_SALE ) : ?>
+						<?php elseif ( REALIA_CONTRACT_SALE == $contract ) : ?>
 							<?php echo __( 'Sale', 'realia' ); ?>
 						<?php endif; ?>
 					</dd>
 				<?php endif; ?>
 
 				<?php $status = Realia_Query::get_property_status_name(); ?>
-				<?php if ( ! empty ( $status ) ) : ?>
+				<?php if ( ! empty( $status ) ) : ?>
 					<dt><?php echo __( 'Status', 'realia' ); ?></dt><dd><?php echo esc_attr( $status ); ?></dd>
 				<?php endif; ?>
 
                 <?php $location = Realia_Query::get_property_location_name(); ?>
-				<?php if ( ! empty ( $location ) ) : ?>
+				<?php if ( ! empty( $location ) ) : ?>
 					<dt><?php echo __( 'Location', 'realia' ); ?></dt><dd><?php echo wp_kses( $location, wp_kses_allowed_html( 'post' ) ); ?></dd>
 				<?php endif; ?>
 
@@ -126,7 +126,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 
                 <?php $material = Realia_Query::get_property_material_name(); ?>
-                <?php if ( ! empty ( $material ) ) : ?>
+                <?php if ( ! empty( $material ) ) : ?>
                     <dt><?php echo __( 'Material', 'realia' ); ?></dt><dd><?php echo wp_kses( $material, wp_kses_allowed_html( 'post' ) ); ?></dd>
                 <?php endif; ?>
 
@@ -152,15 +152,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</dl>
 		</div><!-- /.property-overview -->
 
-		<?php the_content( sprintf(
-			__( 'Continue reading %s', 'realia' ),
-			the_title( '<span class="screen-reader-text">', '</span>', false )
-		) ); ?>
+		<div class="property-description">
+			<?php the_content( sprintf( __( 'Continue reading %s', 'realia' ), the_title( '<span class="screen-reader-text">', '</span>', false ) ) ); ?>
+		</div><!-- /.property-description -->
 
         <?php $amenities = get_categories( array(
-            'taxonomy' 		=> 'amenities',
-            'hide_empty' 	=> false,
-        ) ) ; ?>
+			'taxonomy' 		=> 'amenities',
+			'hide_empty' 	=> false,
+		) ); ?>
 
         <?php $hide = get_theme_mod( 'realia_general_hide_unassigned_amenities', false ); ?>
         <?php if ( ! empty( $amenities ) ) : ?>
@@ -170,7 +169,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php $has_term = has_term( $amenity->term_id, 'amenities' ); ?>
 
                         <?php if ( ! $hide || ( $hide  && $has_term ) ) : ?>
-                            <li <?php if ( $has_term ): ?>class="yes"<?php else : ?>class="no"<?php endif; ?>><?php echo esc_html( $amenity->name ); ?></li>
+                            <li <?php if ( $has_term ) : ?>class="yes"<?php else : ?>class="no"<?php endif; ?>><?php echo esc_html( $amenity->name ); ?></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
@@ -194,16 +193,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php if ( ! empty( $valuation ) && is_array( $valuation ) ) : ?>
 		    <div class="property-valuation">
-		        <?php foreach( $valuation as $group ) : ?>            
+		        <?php foreach ( $valuation as $group ) : ?>
 		            <div class="property-valuation-item">
-		                <dt><?php echo esc_attr( $group[REALIA_PROPERTY_PREFIX . 'valuation_key'] ); ?></dt>
+		                <dt><?php echo esc_attr( $group[ REALIA_PROPERTY_PREFIX . 'valuation_key' ] ); ?></dt>
 		                <dd>
 		                    <div class="bar-valuation" 
-		                         style="width: <?php echo esc_attr( $group[REALIA_PROPERTY_PREFIX . 'valuation_value'] ); ?>%" 
-		                         data-percentage="<?php echo esc_attr( $group[REALIA_PROPERTY_PREFIX . 'valuation_value'] ); ?>">
+		                         style="width: <?php echo esc_attr( $group[ REALIA_PROPERTY_PREFIX . 'valuation_value' ] ); ?>%"
+		                         data-percentage="<?php echo esc_attr( $group[ REALIA_PROPERTY_PREFIX . 'valuation_value' ] ); ?>">
 		                    </div>
 		                </dd>
-		                <span class="percentage-valuation"><?php echo esc_attr( $group[REALIA_PROPERTY_PREFIX . 'valuation_value'] ); ?> %</span>
+		                <span class="percentage-valuation"><?php echo esc_attr( $group[ REALIA_PROPERTY_PREFIX . 'valuation_value' ] ); ?> %</span>
 		            </div><!-- /.property-valuation-item -->            
 		        <?php endforeach; ?>
 		    </div><!-- /.property-valuation -->
@@ -214,15 +213,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <?php if ( ! empty( $facilities ) && is_array( $facilities ) ) : ?>
             <div class="property-public-facilities">
-                <?php foreach( $facilities as $facility ) : ?>
+                <?php foreach ( $facilities as $facility ) : ?>
                     <div class="property-public-facility-wrapper">
                         <div class="property-public-facility">
                             <div class="property-public-facility-title">                        
-                                <span><?php echo esc_attr( $facility[REALIA_PROPERTY_PREFIX . 'public_facilities_key'] ); ?></span>
+                                <span><?php echo esc_attr( $facility[ REALIA_PROPERTY_PREFIX . 'public_facilities_key' ] ); ?></span>
                             </div><!-- /.property-public-facility-title -->
 
                             <div class="property-public-facility-info">
-                                <?php echo esc_attr( $facility[REALIA_PROPERTY_PREFIX . 'public_facilities_value'] ); ?>
+                                <?php echo esc_attr( $facility[ REALIA_PROPERTY_PREFIX . 'public_facilities_value' ] ); ?>
                             </div><!-- /.property-public-facility-info -->
                         </div><!-- /.property-public-facility -->
                     </div><!-- /.property-public-facility-wrapper -->            
@@ -233,7 +232,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!-- MAP LOCATION -->
         <?php $map_location = get_post_meta( get_the_ID(), REALIA_PROPERTY_PREFIX . 'map_location', true ); ?>
 
-        <?php if ( ! empty( $map_location ) && count( $map_location ) == 2) : ?>
+        <?php if ( ! empty( $map_location ) && 2 == count( $map_location ) ) : ?>
             <!-- MAP -->
             <div class="property-map-position">
                 <div class="map" id="simple-map" style="height: 300px"
@@ -252,11 +251,21 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="similar-properties">
                 <h2><?php echo __( 'Similar properties', 'realia' ); ?></h2>
 
-                <?php while( have_posts() ) : the_post(); ?>
-                    <div class="property-box-wrapper">
-                        <?php echo Realia_Template_Loader::load( 'properties/box' ); ?>
-                    </div>
-                <?php endwhile; ?>
+	            <div class="type-box item-per-row-3">
+		            <div class="properties-row">
+			            <?php $index = 0; ?>
+		                <?php while ( have_posts() ) : the_post(); ?>
+		                    <div class="property-container">
+		                        <?php echo Realia_Template_Loader::load( 'properties/box' ); ?>
+		                    </div>
+
+			                <?php if ( 0 == ( ( $index + 1 ) % 3 ) && Realia_Query::loop_has_next() ) : ?>
+		                        </div><div class="properties-row">
+			                <?php endif; ?>
+			                <?php $index++; ?>
+		                <?php endwhile; ?>
+		            </div>
+	            </div>
             </div><!-- /.similar-properties -->
 
         <?php endif?>
@@ -273,22 +282,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		) );
 		?>
 
-        <?php if ( comments_open() || get_comments_number() ): ?>
-            <div class="box">
-                <?php comments_template( '', true ); ?>
-            </div><!-- /.box -->
+        <?php if ( comments_open() || get_comments_number() ) : ?>
+            <div class="box"><?php comments_template( '', true ); ?></div><!-- /.box -->
         <?php endif; ?>
 	</div><!-- .entry-content -->
-
-	<?php
-	// Author bio.
-	if ( is_single() && get_the_author_meta( 'description' ) ) :
-		get_template_part( 'author-bio' );
-	endif;
-	?>
-
-	<footer class="entry-footer">
-		<?php edit_post_link( __( 'Edit', 'realia' ), '<span class="edit-link">', '</span>' ); ?>
-	</footer><!-- .entry-footer -->
-
 </article><!-- #post-## -->
