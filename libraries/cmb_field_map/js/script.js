@@ -28,6 +28,14 @@
 		};
 		var map = new google.maps.Map( mapCanvas[0], mapOptions );
 
+		latitude.on('change', function() {
+			map.setCenter( new google.maps.LatLng( latitude.val(), longitude.val() ) );
+		});
+
+		longitude.on('change', function() {
+			map.setCenter( new google.maps.LatLng( latitude.val(), longitude.val() ) );
+		});
+
 		// Marker
 		var markerOptions = {
 			map: map,
@@ -84,8 +92,8 @@
 			var arrayLength = maps.length;
 			for (var i = 0; i < arrayLength; i++) {
 				var mapCenter = maps[i].getCenter();
-				google.maps.event.trigger(maps[i], 'resize');
-				maps[i].setCenter(mapCenter);
+				google.maps.event.trigger( maps[i], 'resize' );
+				maps[i].setCenter( mapCenter );
 			}
 		};
 	}
