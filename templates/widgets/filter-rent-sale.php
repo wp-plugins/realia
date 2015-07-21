@@ -19,8 +19,24 @@ $classes = ! empty( $instance['classes'] ) ? $instance['classes'] : '';
 
 <div class="tabs <?php echo esc_attr( $classes );?>">
 	<ul class="tabs-navigation">
+
+		<?php
+		/**
+		 * realia_before_rent_sale_widget_navigation_items
+		 */
+		do_action( 'realia_before_rent_sale_widget_navigation_items', get_the_ID() );
+		?>
+
 		<li class="rent <?php if ( empty( $_GET['filter-contract'] ) || 'RENT' == $_GET['filter-contract'] ) : ?>active<?php endif; ?>"><a href="#<?php echo esc_attr( $args['widget_id'] ); ?>-rent"><?php echo __( 'For Rent', 'realia' ); ?></a></li>
 		<li class="sale <?php if ( ! empty( $_GET['filter-contract'] ) && 'SALE' == $_GET['filter-contract'] ) : ?>active<?php endif; ?>"><a href="#<?php echo esc_attr( $args['widget_id'] ); ?>-sale"><?php echo __( 'For Sale', 'realia' ); ?></a></li>
+
+		<?php
+		/**
+		 * realia_after_rent_sale_widget_navigation_items
+		 */
+		do_action( 'realia_after_rent_sale_widget_navigation_items', get_the_ID() );
+		?>
+
 	</ul>
 
 	<?php $fields = Realia_Filter::get_fields(); ?>
@@ -46,6 +62,7 @@ $classes = ! empty( $instance['classes'] ) ? $instance['classes'] : '';
 					?>
 				<?php endif; ?>
 
+				<?php $field_id_prefix = 'rent_'; ?>
 				<?php foreach ( $fields as $key => $value ) : ?>
 					<?php $template = str_replace( '_', '-', $key ); ?>
 					<?php $instance[ 'hide_' . $key ] = ! empty( $instance[ 'rent_hide_' . $key ] ) ? $instance[ 'rent_hide_' . $key ] : null; ?>
@@ -80,6 +97,7 @@ $classes = ! empty( $instance['classes'] ) ? $instance['classes'] : '';
 					?>
 				<?php endif; ?>
 
+				<?php $field_id_prefix = 'sale_'; ?>
 				<?php foreach ( $fields as $key => $value ) : ?>
 					<?php $template = str_replace( '_', '-', $key ); ?>
 					<?php $instance[ 'hide_' . $key ] = ! empty( $instance[ 'sale_hide_' . $key ] ) ? $instance[ 'sale_hide_' . $key ] : null; ?>
@@ -88,7 +106,7 @@ $classes = ! empty( $instance['classes'] ) ? $instance['classes'] : '';
 
 				<?php if ( ! empty( $instance['button_text'] ) ) : ?>
 					<div class="form-group">
-						<button class="btn"><?php echo esc_attr( $instance['button_text'] ); ?></button>
+						<button class="button"><?php echo esc_attr( $instance['button_text'] ); ?></button>
 					</div><!-- /.form-group -->
 				<?php endif; ?>
 			</form>

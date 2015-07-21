@@ -133,7 +133,7 @@ if ( ! class_exists( 'Realia' ) ) {
 	            array(
 		            'name'      => 'CMB2',
 		            'slug'      => 'cmb2',
-		            'required'  => false,
+		            'required'  => true,
 	            ),
 				array(
 					'name'      => 'WP REST API (WP API)',
@@ -153,6 +153,7 @@ if ( ! class_exists( 'Realia' ) ) {
 		 */
 		public static function image_sizes() {
 			add_image_size( 'property-row-thumbnail', 400, 300, true );
+			add_image_size( 'property-box-thumbnail', 270, 200, true );
 		}
 	}
 
