@@ -1,8 +1,54 @@
+.realia-message {
+	border-color: #2caabd;
+    padding: 24px 12px;
+}
+
+.realia-message p {
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+}
+
+.realia-message .submit {
+    margin: 0px;
+}
+
+.realia-message .button-primary {
+	background-color: #2caabd;
+	border-color: #2c9bac;
+}
+
+.realia-message .button-primary:hover {
+	background-color: #259bad;
+	border-color: #2c9bac;
+}
+
+#setting-error-tgmpa {
+    display: block;
+}
+
 .subtitle {
 	color: rgba(0, 0, 0, .7);
 	font-style: italic;
 	margin-top: 40px;
 	text-align: center;
+}
+
+.toplevel_page_realia .wp-menu-image:before {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	content: '\e600';
+	font-family: 'Realia';
+	font-size: 17px;
+}
+
+#menu-posts-property .wp-menu-image:before {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	content: '\e601';
+	font-family: 'Realia';
+	font-size: 16px;
 }
 
 .green {
